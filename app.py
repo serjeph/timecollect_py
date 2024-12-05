@@ -27,7 +27,7 @@ logging.basicConfig(
 def main():
     """function that will connect to Google Sheet API"""
     creds = sheet_service()
-    datasets = set_types(2023, 12, 31)
+    datasets = set_types(2024, 12, 29)
 
     if creds:
         logging.info("🌐 Connected to Google API.")
@@ -38,12 +38,12 @@ def main():
         )
         logging.info("📝 Timesheet collection started...")
 
-        sheet_names = ["202411", "202412"]
+        sheet_names = ["202501", "202502"]
 
         for sheet_name in sheet_names:
             excel_sheet = []
             employee_data = get_data(
-                creds, os.getenv("EMPLOYEES_SPREADSHEET"), f"{sheet_name}!A:E"
+                creds, os.getenv("EMPLOYEES_SPREADSHEET_2025"), f"{sheet_name}!A:E"
             )
             if not employee_data:
                 logging.error("No employee data collected.")
@@ -61,14 +61,14 @@ def main():
             logging.info(f"Collecting timesheet [{sheet_name}] data")
 
             for employee in employees:
-                data = get_data(creds, employee.spreadsheet_id, f"{sheet_name}!A7:AT39")
+                data = get_data(creds, employee.spreadsheet_id, f"{sheet_name}!A7:BS39")
                 transformed_data = transform_data(
                     datasets, data, employee, project_data
                 )
 
                 excel_sheet += transformed_data
                 logging.info(
-                    f"[{sheet_name}]-[🪪 {'*' * (10-len(employee.nickname))} {employee.nickname} ] ✅ OK."
+                    f"[{sheet_name}]-[🧑🏽 {'*' * (10-len(employee.nickname))} {employee.nickname} ] ✅ OK."
                 )
 
             export(excel_sheet, sheet_name)

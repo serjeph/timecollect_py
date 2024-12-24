@@ -31,16 +31,28 @@ def main():
 
     if creds:
         logging.info("🌐 Connected to Google API.")
-        employees = []
 
         project_data = get_data(
             creds, os.getenv("PROJECT_SPREADSHEET"), os.getenv("PROJECT_RANGE")
         )
         logging.info("📝 Timesheet collection started...")
 
-        sheet_names = ["202501", "202502"]
+        sheet_names = ["202501", 
+                       "202502",
+                       "202503",
+                       "202504",
+                       "202505",
+                       "202506",
+                       "202507",
+                       "202508",
+                       "202509",
+                       "202510",
+                       "202511",
+                       "202512"
+                       ]
 
         for sheet_name in sheet_names:
+            employees = []
             excel_sheet = []
             employee_data = get_data(
                 creds, os.getenv("EMPLOYEES_SPREADSHEET_2025"), f"{sheet_name}!A:E"
@@ -61,7 +73,7 @@ def main():
             logging.info(f"Collecting timesheet [{sheet_name}] data")
 
             for employee in employees:
-                data = get_data(creds, employee.spreadsheet_id, f"{sheet_name}!A7:BS39")
+                data = get_data(creds, employee.spreadsheet_id, f"{sheet_name}!A7:BT39")
                 transformed_data = transform_data(
                     datasets, data, employee, project_data
                 )
@@ -72,6 +84,7 @@ def main():
                 )
 
             export(excel_sheet, sheet_name)
+
 
 
 if __name__ == "__main__":

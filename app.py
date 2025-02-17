@@ -27,6 +27,7 @@ logging.basicConfig(
 def main():
     """function that will connect to Google Sheet API"""
     creds = sheet_service()
+    # change this every year
     datasets = set_types(2024, 12, 29)
 
     if creds:
@@ -37,8 +38,8 @@ def main():
         )
         logging.info("📝 Timesheet collection started...")
 
-        sheet_names = ["202501", 
-                       "202502"
+        sheet_names = ["202502", 
+                       "202503"
                        ]
 
         for sheet_name in sheet_names:
